@@ -8,7 +8,8 @@ project(sample_project CXX C)
 # Core and main are split. This allows us to link core to main and tests.
 
 # Core library. *.cpp should be added here.
-add_library(core)
+add_library(core
+  ./src/utils.cpp)
 
 # Main entry point.
 add_executable(main
