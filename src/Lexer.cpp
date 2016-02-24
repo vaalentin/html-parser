@@ -42,6 +42,24 @@ void Lexer::consume() {
   }
 }
 
+bool Lexer::match(const char* s) {
+  unsigned len = std::strlen(s);
+
+  unsigned npos;
+  char c;
+
+  for(unsigned i = 0; i < len; ++i) {
+    npos = m_pos + i;
+    c = *(s + i);
+
+    if(npos >= m_src->length() || m_src->at(npos) != c) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 bool Lexer::match(char c) {
   return m_char == c;
 }
