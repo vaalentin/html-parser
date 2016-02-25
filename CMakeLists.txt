@@ -11,6 +11,7 @@ project(sample_project CXX C)
 add_library(core
   ./src/Token.cpp
   ./src/Lexer.cpp
+  ./src/HtmlLexer.cpp
   ./src/utils.cpp)
 
 # Main entry point.
