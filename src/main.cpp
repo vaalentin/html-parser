@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "HtmlLexer.h"
+#include "Token.h"
 
 int main(int argc, char** argv) {
   if(argc < 2) {
@@ -17,6 +19,13 @@ int main(int argc, char** argv) {
   std::stringstream stream;
   stream << file.rdbuf();
   std::string src = stream.str();
+
+  HtmlLexer lex(&src);
+  std::vector<Token> toks = lex.getToks();
+
+  for(auto t : toks) {
+    std::cout << t.toStr() << std::endl;
+  }
 
   return 0;
 }

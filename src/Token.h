@@ -12,6 +12,7 @@ class Token {
 
   public:
     Token(const char* type, std::string val, int row, int col);
+    std::string toStr();
 };
 
 #endif
