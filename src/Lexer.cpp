@@ -42,6 +42,12 @@ void Lexer::consume() {
   }
 }
 
+void Lexer::consume(int n) {
+  for(int i = 0; i < n; ++i) {
+    consume();
+  }
+}
+
 bool Lexer::match(const char* s) {
   unsigned len = std::strlen(s);
 

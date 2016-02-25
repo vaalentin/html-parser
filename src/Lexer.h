@@ -17,6 +17,7 @@ class Lexer {
     int m_col;
 
     void consume();
+    void consume(int n);
     bool match(const char* s);
     bool match(char c);
     bool peek(char c);
