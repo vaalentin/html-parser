@@ -18,7 +18,7 @@ $ cmake ..
 $ ./main input.html > output.txt
 ```
 
-## Tests
+## Test
 
 Follow installation instructions and pass `-D TESTS=ON` to cmake:
 
