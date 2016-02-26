@@ -4,6 +4,34 @@
 
 Recursive descent lexer & parser.
 
+## Installation
+
+```
+$ mkdir build
+$ cd build
+$ cmake ..
+```
+
+## Usage
+
+```
+$ ./main input.html > output.txt
+```
+
+## Tests
+
+Follow installation instructions and pass `-D TESTS=ON` to cmake:
+
+```
+$ cmake -D TESTS=ON ..
+```
+
+Then:
+
+```
+$ ./tests
+```
+
 ## License
 
-MIT, see [LICENSE.md](https://github.com/vaalentin/cpp-boilerplate/blob/master/LICENSE.md) for more details.
+MIT, see [LICENSE.md](https://github.com/vaalentin/html-parser/blob/master/LICENSE.md) for more details.
