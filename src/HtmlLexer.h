@@ -6,6 +6,14 @@
 class HtmlLexer : public Lexer {
   private:
     virtual void next();
+
+    void whitespace();
+    void comment();
+    void tag();
+    void id();
+    void value();
+    void text();
+
   public:
     using Lexer::Lexer;
 };
