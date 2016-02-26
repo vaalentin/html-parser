@@ -4,6 +4,8 @@
 #include <string>
 
 namespace utils {
+  // see http://stackoverflow.com/a/11478458
+  // for a great explanation of static vs extern
   extern const char* ws;
   bool isWs(char c);
   std::string& ltrim(std::string& s, const char* c = ws);
