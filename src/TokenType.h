@@ -1,3 +1,3 @@
 #include <string>
 
-// same as typedef const char* TokenType;
+using TokenType = const char*;
