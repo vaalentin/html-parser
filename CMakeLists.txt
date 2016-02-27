@@ -10,6 +10,7 @@ project(sample_project CXX C)
 # Core library. *.cpp should be added here.
 add_library(core
   ./src/Token.cpp
+  ./src/TokenType.h
   ./src/Lexer.cpp
   ./src/HtmlLexer.cpp
   ./src/utils.cpp)
