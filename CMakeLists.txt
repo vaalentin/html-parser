@@ -12,6 +12,7 @@ add_library(core
   ./src/Token.cpp
   ./src/TokenType.h
   ./src/Lexer.cpp
+  ./src/HtmlTokenType.cpp
   ./src/HtmlLexer.cpp
   ./src/utils.cpp)
 
