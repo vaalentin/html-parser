@@ -81,7 +81,9 @@ void HtmlLexer::tag() {
 }
 
 void HtmlLexer::comment() {
-  consume(2); // /*
+  m_toks.push_back(Token ("<!--", "", m_row, m_col));
+
+  consume(4); // <!--
 
   whitespace();
 
@@ -91,7 +93,7 @@ void HtmlLexer::comment() {
   m_buf.clear();
 
   while(true) {
-    if(match("*/") || match(EOF)) {
+    if(match("-->") || match(EOF)) {
       break;
     }
 
@@ -99,13 +101,15 @@ void HtmlLexer::comment() {
     consume();
   }
 
-  consume(2); // */
-
   utils::rtrim(m_buf);
 
   if(m_buf.length() > 0) {
-    m_toks.push_back(Token ("COMMENT", m_buf, row, col));
+    m_toks.push_back(Token ("TEXT", m_buf, row, col));
   }
+
+  m_toks.push_back(Token ("-->", "", m_row, m_col));
+
+  consume(3); // -->
 }
 
 void HtmlLexer::id() {
@@ -163,7 +167,7 @@ void HtmlLexer::text() {
   m_buf.clear();
 
   while(true) {
-    if(match('<') || match("/*") || match(EOF)) {
+    if(match('<') || match(EOF)) {
       break;
     }
 
