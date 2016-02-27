@@ -1,6 +1,7 @@
 #include <iostream>
 #include "HtmlLexer.h"
 #include "utils.h"
+#include "HtmlTokenType.h"
 
 void HtmlLexer::next() {
   if(match("/*")) {
@@ -22,15 +23,15 @@ void HtmlLexer::whitespace() {
 
 void HtmlLexer::tag() {
   if(peek('!')) {
-    m_toks.push_back(Token ("<!", "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_DOCTYPE, "", m_row, m_col));
     consume(2); // <!
   }
   else if(peek('/')) {
-    m_toks.push_back(Token ("</", "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_CLOSE, "", m_row, m_col));
     consume(2); // </
   }
   else {
-    m_toks.push_back(Token ("<", "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_OPEN, "", m_row, m_col));
     consume(); // <
   }
 
@@ -38,30 +39,28 @@ void HtmlLexer::tag() {
 
   id();
 
-  // 0 => "/>"
-  // 1 => ">"
-  int type;
+  TokenType type;
 
   int row;
   int col;
 
   while(true) {
     if(match('=')) {
-      m_toks.push_back(Token ("=", "", m_row, m_col));
+      m_toks.push_back(Token (HtmlTokenType::ASSIGN, "", m_row, m_col));
       consume();
     }
     else if(match('"')) {
       value();
     }
     else if(match("/>")) {
-      type = 0;
+      type = HtmlTokenType::R_TAG_CLOSE;
       row = m_row;
       col = m_col;
       consume(2); // />
       break;
     }
     else if(match('>')) {
-      type = 1;
+      type = HtmlTokenType::R_TAG_OPEN;
       row = m_row;
       col = m_col;
       consume(); // >
@@ -77,11 +76,11 @@ void HtmlLexer::tag() {
     }
   }
 
-  m_toks.push_back(Token (type == 0 ? "/>" : ">", "", row, col));
+  m_toks.push_back(Token (type, "", row, col));
 }
 
 void HtmlLexer::comment() {
-  m_toks.push_back(Token ("<!--", "", m_row, m_col));
+  m_toks.push_back(Token (HtmlTokenType::COMMENT_OPEN, "", m_row, m_col));
 
   consume(4); // <!--
 
@@ -104,10 +103,10 @@ void HtmlLexer::comment() {
   utils::rtrim(m_buf);
 
   if(m_buf.length() > 0) {
-    m_toks.push_back(Token ("TEXT", m_buf, row, col));
+    m_toks.push_back(Token (HtmlTokenType::TEXT, m_buf, row, col));
   }
 
-  m_toks.push_back(Token ("-->", "", m_row, m_col));
+  m_toks.push_back(Token (HtmlTokenType::COMMENT_CLOSE, "", m_row, m_col));
 
   consume(3); // -->
 }
@@ -130,7 +129,7 @@ void HtmlLexer::id() {
   }
 
   if(m_buf.length() > 0) {
-    m_toks.push_back(Token ("ID", m_buf, row, col));
+    m_toks.push_back(Token (HtmlTokenType::ID, m_buf, row, col));
   }
 }
 
@@ -154,7 +153,7 @@ void HtmlLexer::value() {
   consume(); // "
 
   if(m_buf.length() > 0) {
-    m_toks.push_back(Token ("VALUE", m_buf, row, col));
+    m_toks.push_back(Token (HtmlTokenType::VALUE, m_buf, row, col));
   }
 }
 
@@ -178,6 +177,6 @@ void HtmlLexer::text() {
   utils::rtrim(m_buf);
 
   if(m_buf.length() > 0) {
-    m_toks.push_back(Token ("TEXT", m_buf, row, col));
+    m_toks.push_back(Token (HtmlTokenType::TEXT, m_buf, row, col));
   }
 }
