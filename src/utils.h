@@ -11,6 +11,7 @@ namespace utils {
   std::string& ltrim(std::string& s, const char* c = ws);
   std::string& rtrim(std::string& s, const char* c = ws);
   std::string& trim(std::string& s, const char* c = ws);
+  std::string& replace(std::string& str, const std::string& from, const std::string& to);
 }
 
 #endif

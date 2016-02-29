@@ -79,3 +79,27 @@ TEST(trim, emptyString) {
   std::string s = "";
   EXPECT_EQ("", utils::trim(s));
 }
+
+/**
+ * utils::replace(std::string& s, const std::string& f, const std::string& t);
+ */
+
+TEST(replace, simple) {
+  std::string s = "Hello, {{placeholder}}!";
+  utils::replace(s, "{{placeholder}}", "World");
+  EXPECT_EQ("Hello, World!", s);
+}
+
+TEST(replace, successive) {
+  std::string s = "%m-%d-%y";
+  const char* d = "23";
+  const char* m = "Oct";
+  const char* y = "1962";
+
+  utils::replace(s, "%d", d);
+  EXPECT_EQ("%m-23-%y", s);
+  utils::replace(s, "%m", m);
+  EXPECT_EQ("Oct-23-%y", s);
+  utils::replace(s, "%y", y);
+  EXPECT_EQ("Oct-23-1962", s);
+}

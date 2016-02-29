@@ -29,3 +29,15 @@ std::string& utils::rtrim(std::string& s, const char* c) {
 std::string& utils::trim(std::string& s, const char* c) {
   return ltrim(rtrim(s, c), c);
 }
+
+std::string& utils::replace(std::string& s, const std::string& f, const std::string& t) {
+  size_t fpos = s.find(f);
+
+  if(fpos == std::string::npos) {
+    return s;
+  }
+
+  s.replace(fpos, f.length(), t);
+
+  return s;
+}
