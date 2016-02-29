@@ -4,7 +4,7 @@
 #include "HtmlTokenType.h"
 
 void HtmlLexer::next() {
-  if(match("/*")) {
+  if(match("<!--")) {
     comment();
   }
   else if(match('<')) {
@@ -23,15 +23,15 @@ void HtmlLexer::whitespace() {
 
 void HtmlLexer::tag() {
   if(peek('!')) {
-    m_toks.push_back(Token (HtmlTokenType::L_TAG_DOCTYPE, "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_DOCTYPE, m_row, m_col));
     consume(2); // <!
   }
   else if(peek('/')) {
-    m_toks.push_back(Token (HtmlTokenType::L_TAG_CLOSE, "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_CLOSE, m_row, m_col));
     consume(2); // </
   }
   else {
-    m_toks.push_back(Token (HtmlTokenType::L_TAG_OPEN, "", m_row, m_col));
+    m_toks.push_back(Token (HtmlTokenType::L_TAG_OPEN, m_row, m_col));
     consume(); // <
   }
 
@@ -46,7 +46,7 @@ void HtmlLexer::tag() {
 
   while(true) {
     if(match('=')) {
-      m_toks.push_back(Token (HtmlTokenType::ASSIGN, "", m_row, m_col));
+      m_toks.push_back(Token (HtmlTokenType::ASSIGN, m_row, m_col));
       consume();
     }
     else if(match('"')) {
@@ -76,11 +76,11 @@ void HtmlLexer::tag() {
     }
   }
 
-  m_toks.push_back(Token (type, "", row, col));
+  m_toks.push_back(Token (type, row, col));
 }
 
 void HtmlLexer::comment() {
-  m_toks.push_back(Token (HtmlTokenType::COMMENT_OPEN, "", m_row, m_col));
+  m_toks.push_back(Token (HtmlTokenType::COMMENT_OPEN, m_row, m_col));
 
   consume(4); // <!--
 
@@ -106,7 +106,7 @@ void HtmlLexer::comment() {
     m_toks.push_back(Token (HtmlTokenType::TEXT, m_buf, row, col));
   }
 
-  m_toks.push_back(Token (HtmlTokenType::COMMENT_CLOSE, "", m_row, m_col));
+  m_toks.push_back(Token (HtmlTokenType::COMMENT_CLOSE, m_row, m_col));
 
   consume(3); // -->
 }

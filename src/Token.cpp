@@ -1,7 +1,15 @@
 #include <string>
 #include "Token.h"
+#include "TokenType.h"
+#include "utils.h"
 
-Token::Token(const char* type, std::string val, int row, int col) {
+Token::Token(TokenType type, int row, int col) {
+  m_type = type;
+  m_row = row;
+  m_col = col;
+}
+
+Token::Token(TokenType type, std::string val, int row, int col) {
   m_type = type;
   m_val = val;
   m_row = row;
