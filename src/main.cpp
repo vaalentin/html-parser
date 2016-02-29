@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
   HtmlLexer lex(&src);
   std::vector<Token> toks = lex.getToks();
 
+  Token::strPatt = "%t";
+
   for(auto t : toks) {
     std::cout << t.toStr() << std::endl;
   }

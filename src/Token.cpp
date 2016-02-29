@@ -8,8 +8,13 @@ Token::Token(const char* type, std::string val, int row, int col) {
   m_col = col;
 }
 
+const char* Token::strPatt = "(%r, %c) %t %v";
+
 std::string Token::toStr() {
-  return std::string ("(" + std::to_string(m_row) + ", " + std::to_string(m_col) + ")"
-    + " " + std::string(m_type)
-    + " " + m_val);
+  std::string s (strPatt);
+  utils::replace(s, "%r", std::to_string(m_row));
+  utils::replace(s, "%c", std::to_string(m_col));
+  utils::replace(s, "%t", m_type);
+  utils::replace(s, "%v", m_val);
+  return s;
 }
