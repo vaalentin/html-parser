@@ -4,6 +4,7 @@
 #include <string>
 #include "HtmlLexer.h"
 #include "Token.h"
+#include "HtmlParser.h"
 
 int main(int argc, char** argv) {
   if(argc < 2) {
@@ -23,11 +24,8 @@ int main(int argc, char** argv) {
   HtmlLexer lex(&src);
   std::vector<Token> toks = lex.getToks();
 
-  Token::strPatt = "%t";
-
-  for(auto t : toks) {
-    std::cout << t.toStr() << std::endl;
-  }
+  HtmlParser par(&toks);
+  par.parse();
 
   return 0;
 }

@@ -14,7 +14,9 @@ add_library(core
   ./src/Lexer.cpp
   ./src/HtmlTokenType.cpp
   ./src/HtmlLexer.cpp
-  ./src/utils.cpp)
+  ./src/utils.cpp
+  ./src/Parser.cpp
+  ./src/HtmlParser.cpp)
 
 # Main entry point.
 add_executable(main

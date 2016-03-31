@@ -15,7 +15,8 @@ class Token {
     static const char* strPatt;
     Token(TokenType type, int row, int col);
     Token(TokenType type, std::string val, int row, int col);
-    std::string toStr();
+    std::string toStr() const;
+    TokenType getType() const;
 };
 
 #endif

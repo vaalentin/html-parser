@@ -18,8 +18,6 @@ std::vector<Token> Lexer::getToks() {
     next();
   }
 
-  m_toks.push_back(Token ("EOF", "", m_row, m_col));
-
   return m_toks;
 }
 
